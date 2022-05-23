@@ -7,7 +7,6 @@ if(isset($_SESSION["user"])) {
 	header("location: wlcome.php");
 }
 
-	
 if(isset($_REQUEST["register_btn"])) {
 	echo "<pre>" ;
 	print_r($_REQUEST);
@@ -16,19 +15,7 @@ if(isset($_REQUEST["register_btn"])) {
 	$name = filter_var($_REQUEST["name"],FILTER_UNSAFE_RAW);
 	$email = filter_var($_REQUEST["email"],FILTER_SANITIZE_EMAIL);
 	$password = strip_tags($_REQUEST["password"]);
-
-
-
 }
-
-
-
-
-
-
-
-
-
 ?>
 <html lang="en">
 
