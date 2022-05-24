@@ -1,5 +1,10 @@
 <?php
 require_once "connection.php";
+ session_start();
+
+ if(isset($_SESSION)) {
+	 header("location: welcome.php");
+ }
 ?>
 
 
@@ -16,6 +21,14 @@ require_once "connection.php";
 </head>
 <body>
 	<div class="container">
+
+
+	<?php 
+	if(isset($_REQUEST["msg"])){
+		echo "<p class='alert alert-warning'>".$_REQUEST["msg"]."</p>";
+	}
+	?>
+
 		<form action="index.php" method="post">
       <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
