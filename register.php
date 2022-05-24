@@ -9,11 +9,11 @@ if(isset($_SESSION["user"])) {
 
 if(isset($_REQUEST["register_btn"])) {
 
-	
+	/*
 	echo "<pre>" ;
 	print_r($_REQUEST);
 	echo "</pre>";
- 	
+ 	*/
 
 	$name = filter_var($_REQUEST["name"],FILTER_UNSAFE_RAW);
 	$email = filter_var($_REQUEST["email"],FILTER_SANITIZE_EMAIL);
@@ -52,20 +52,24 @@ if(isset($_REQUEST["register_btn"])) {
 				$insert_stmt = $db->prepare("INSERT INTO users(name,email,password,created) VALUES (:name,:email,:password,:created)");
 
 				if(
-					$insert_stmt->execute {
+					$insert_stmt->execute(
 						[
 							":name" => $name,
 							":email" => $email,
 							":password" => $hased_password,
 							":created" => $created
 						]
-					}
-				)
-			}
+					)
+				) {
+					header("location: index.php?msg=".urlencode("Click the verification email"));
+				}
+			} 
+
+			
 		}
 
-		catch{
-
+		catch(PDOException $e) {
+			$pdoError = $e->getMessage();
 		}
 	}
 }
