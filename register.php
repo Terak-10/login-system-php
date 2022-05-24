@@ -18,7 +18,6 @@ if(isset($_REQUEST["register_btn"])) {
 	$name = filter_var($_REQUEST["name"],FILTER_UNSAFE_RAW);
 	$email = filter_var($_REQUEST["email"],FILTER_SANITIZE_EMAIL);
 	$password = strip_tags($_REQUEST["password"]);
-}
 
 	if(empty($name)) {
 		$errorMsg[0][] = "Name Required!";
@@ -35,6 +34,43 @@ if(isset($_REQUEST["register_btn"])) {
 	if(strlen($password) < 6) {
 		$errorMsg[2][] = "Must be 6+ character!";
 	}
+
+	if(empty($errorMsg)) {
+
+		try{
+			$select_stmt = $db->prepare("SELECT name,email FROM users WHERE email = :email");
+			$select_stmt-> execute([":email" => $email]);
+			$row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+			if(isset($row["email"]) == $email){
+				$errorMsg[1][] = "Email adress already exist, please choose another or login instead";
+			} else {
+				$hased_password = password_hash($password, PASSWORD_DEFAULT);
+				$created = new DateTime();
+				$created = $created->format("Y-m-d H.i:s");
+
+				$insert_stmt = $db->prepare("INSERT INTO users(name,email,password,created) VALUES (:name,:email,:password,:created)");
+
+				if(
+					$insert_stmt->execute {
+						[
+							":name" => $name,
+							":email" => $email,
+							":password" => $hased_password,
+							":created" => $created
+						]
+					}
+				)
+			}
+		}
+
+		catch{
+
+		}
+	}
+}
+
+	
 ?>
 <html lang="en">
 
