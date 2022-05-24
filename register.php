@@ -8,14 +8,33 @@ if(isset($_SESSION["user"])) {
 }
 
 if(isset($_REQUEST["register_btn"])) {
+
+	
 	echo "<pre>" ;
 	print_r($_REQUEST);
 	echo "</pre>";
- 
+ 	
+
 	$name = filter_var($_REQUEST["name"],FILTER_UNSAFE_RAW);
 	$email = filter_var($_REQUEST["email"],FILTER_SANITIZE_EMAIL);
 	$password = strip_tags($_REQUEST["password"]);
 }
+
+	if(empty($name)) {
+		$errorMsg[0][] = "Name Required!";
+	}
+
+	if(empty($email)) {
+		$errorMsg[1][] = "Email required!";
+	}
+
+	if(empty($password)) {
+		$errorMsg[2][] = "Password required!";
+	}
+
+	if(strlen($password) < 6) {
+		$errorMsg[2][] = "Must be 6+ character!";
+	}
 ?>
 <html lang="en">
 
@@ -31,14 +50,40 @@ if(isset($_REQUEST["register_btn"])) {
 	<div class="container">
 		
 		<form action="register.php" method="post">
+
+		<?php 
+		if(isset($errorMsg[0])){
+			foreach($errorMsg[0] as $nameError) {
+				echo "<p class='small text-danger'>".$nameError."</p>";
+			}
+		}
+		?>
+
 			<div class="mb-3">
 				<label for="name" class="form-label">Name</label>
 				<input type="text" name="name" class="form-control" placeholder="Jane Doe">
 			</div>
+
+
+			<?php 
+			if(isset($errorMsg[1])){
+				foreach($errorMsg[1] as $emailError) {
+					echo "<p class='small text-danger' >".$emailError."</p>";
+				}
+			}
+			?>
 			<div class="mb-3">
 				<label for="email" class="form-label">Email address</label>
 				<input type="email" name="email" class="form-control" placeholder="jane@doe.com">
 			</div>
+
+			<?php 
+			if(isset($errorMsg[2])){
+				foreach($errorMsg[2] as $passwordMissing) {
+					echo "<p class='small text-danger'>".$passwordMissing."</p>";
+				}
+			}
+			?>
 			<div class="mb-3">
 				<label for="password" class="form-label">Password</label>
 				<input type="password" name="password" class="form-control" placeholder="">
