@@ -7,8 +7,6 @@ require_once "connection.php";
  }
 ?>
 
-
-
 <html lang="en">
 
 <head>

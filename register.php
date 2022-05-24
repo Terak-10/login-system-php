@@ -64,8 +64,6 @@ if(isset($_REQUEST["register_btn"])) {
 					header("location: index.php?msg=".urlencode("Click the verification email"));
 				}
 			} 
-
-			
 		}
 
 		catch(PDOException $e) {
@@ -73,8 +71,6 @@ if(isset($_REQUEST["register_btn"])) {
 		}
 	}
 }
-
-	
 ?>
 <html lang="en">
 
