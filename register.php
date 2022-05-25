@@ -9,11 +9,6 @@ if(isset($_SESSION["user"])) {
 
 if(isset($_REQUEST["register_btn"])) {
 
-	/*
-	echo "<pre>" ;
-	print_r($_REQUEST);
-	echo "</pre>";
- 	*/
 
 	$name = filter_var($_REQUEST["name"],FILTER_UNSAFE_RAW);
 	$email = filter_var($_REQUEST["email"],FILTER_SANITIZE_EMAIL);
