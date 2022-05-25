@@ -1,3 +1,13 @@
+<?php 
+require_once "connection.php";
+session_start();
+
+if(!isset($_SESSION["user"])){
+	header("location:index.php");
+}
+
+?>
+
 <html lang="en">
 
 <head>
@@ -10,6 +20,11 @@
 </head>
 <body>
 	<div class="container">
+		<?php 
+		echo "<h1> Welcome user : ".$_SESSION["user"]["name"]."</h1>";
+		?>
 	</div>
+
+	<a class="btn btn-primary" href="logout.php">Logout</a>
 </body>
 </html>
